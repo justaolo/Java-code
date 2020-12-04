@@ -1,0 +1,51 @@
+BufferedReader miBuffer = null;
+		      FileReader entrada;
+		      String linea;
+	    	  String [] fila;
+	    	  String [] arr =null;
+	    	  HashMap <String,String> map;
+	    	  int controlador=0;	
+	    	  
+		      try {
+		         entrada = new FileReader(path);
+		         miBuffer =new BufferedReader(entrada);
+		         linea = miBuffer.readLine();
+		         while (linea!=null) {
+		            fila = linea.split(separador);
+		            System.out.println("Leyendo registro: "+ Arrays.toString(fila));//imprimiendo array del primer registro
+		            
+		                        
+		            /*---------------------------------------*/
+		            map = new HashMap <String, String>();
+		            if(controlador==0) {//controlando que la cabecera se guarde y no cambie
+		            	arr = fila;
+		            	controlador=1;
+		            }
+		            if(controlador==1) {
+		            	linea = miBuffer.readLine();
+		            	fila = linea.split(separador);
+					    controlador=2;
+		            }
+		            for(int i=0;i<fila.length;i++){
+					       map.put(arr[i], fila[i]);
+					         
+					       System.out.println("Clave " + (i+1) +" del map: "+arr[i]);//clave del map
+					       System.out.println("valor de dicha clave: "+map.get(arr[i]));//obteniendo valor de dicha clave
+					 }
+					 System.out.println("Ejemplo mostrando el valor de la clave "+arr[1]+" del map: " + map.get(arr[1]));//ejemplo obteniendo valor de una clave
+		             linea = miBuffer.readLine(); 
+		         }
+		         
+		         
+		      } catch (IOException e) {
+		         System.out.println("No se ha encontrado el archivo");
+		      } finally {
+		         if (null==miBuffer) {
+		            try {
+						miBuffer.close();
+					} catch (IOException e) {
+						System.out.println("Error. No se ha cerrado el buffer");
+					}
+		         }
+		            
+		      }
